@@ -19,13 +19,13 @@ def make_stock_router(service: StockService):
 
         return results, HTTPStatus.OK
 
-    @router.route('/warehouse-replenishments', methods=[HTTPMethod.GET])
+    @router.route('/wh-replenishments', methods=[HTTPMethod.GET])
     def get_warehouse_replenishments() -> tuple[list[dict[int, str]], HTTPStatus]:
         results = service.get_warehouse_replenishments()
 
         return results, HTTPStatus.OK
 
-    @router.route('/warehouse-replenishments', methods=[HTTPMethod.POST])
+    @router.route('/wh-replenishments', methods=[HTTPMethod.POST])
     def create_warehouse_replenishment() -> tuple[dict[int, str], HTTPStatus]:
         data = request.get_json()
         vendor_name, replenishments = data['vendor_name'], data['replenishments']

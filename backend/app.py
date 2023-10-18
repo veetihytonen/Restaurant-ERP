@@ -1,4 +1,5 @@
 from flask import Flask
+from config import SECRET_KEY
 
 from daos.ingredient_dao import IngredientDao
 from daos.stock_dao import StockDao
@@ -7,10 +8,11 @@ from services.ingredient_service import IngredientService
 from services.stock_service import StockService
 
 app = Flask(__name__)
+app.secret_key = SECRET_KEY
 
 from db_init import init_db
 
-import routes.public_router as public
+from routes.public_router import make_public_router
 from routes.ingredient_router import make_ingredient_router
 from routes.stock_router import make_stock_router
 
@@ -18,7 +20,8 @@ init_db()
 
 from db import db
 
-app.register_blueprint(public.router, url_prefix='/')
+public_router = make_public_router()
+app.register_blueprint(public_router, url_prefix='/')
 
 ingredient_dao = IngredientDao(db_connection=db)
 ingrendient_service = IngredientService(dao=ingredient_dao)
