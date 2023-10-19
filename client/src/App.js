@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import Home from './pages/home'
 import Login from './pages/login'
+import Register from './pages/register'
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
           <Route path='*' element={ <Navigate replace to='/' /> } />
           <Route path='/' element={ currUser ? <Home /> : <Navigate replace to='/login' /> } />
           <Route path='/login' element={ <Login /> }/>
+          <Route path='/register' element={ <Register /> } />
         </Routes>
       </Router>
     </>
