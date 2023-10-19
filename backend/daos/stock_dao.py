@@ -102,7 +102,9 @@ class StockDao:
         VALUES (
             :name
         )
-        RETURNING id, vendor_name
+        RETURNING 
+            id, 
+            vendor_name
         """
 
         params = {'name': vendor_name}

@@ -12,7 +12,8 @@ const App = () => {
     <>
       <Router>
         <Routes>
-          <Route path='/' element={ currUser ? <Home /> : <Navigate replace to='/login' /> }/>
+          <Route path='*' element={ <Navigate replace to='/' /> } />
+          <Route path='/' element={ currUser ? <Home /> : <Navigate replace to='/login' /> } />
           <Route path='/login' element={ <Login /> }/>
         </Routes>
       </Router>
