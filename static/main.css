@@ -14,3 +14,12 @@ td, th {
     border-color: black;
     border-width: 1px;
 }
+
+.flashes {
+    background-color: crimson;
+    font-size: larger;
+}
+
+ul.flashes {
+    list-style: none;
+}

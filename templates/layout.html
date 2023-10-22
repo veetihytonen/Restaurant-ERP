@@ -1,0 +1,20 @@
+<!doctype html>
+<link rel="stylesheet" href="/static/main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ravintola-ERP</title>
+<h1>Ravintola-ERP</h1>
+
+<hr>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+{% block content %}{% endblock %}

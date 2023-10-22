@@ -2,6 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import text
 
+from sqlalchemy.exc import IntegrityError
+
 class UserDao:
     def __init__(self, db_connection: SQLAlchemy) -> None:
         self.__db = db_connection
@@ -62,7 +64,7 @@ class UserDao:
         if not check_password_hash(user.password, password):
             return False 
 
-        return user.id, user.username, user.role
+        return {'id': user.id, 'username': user.username, 'role': user.role}
 
     def create_user(self, username: str, password: str, role: int):
         password_hash = generate_password_hash(password)
@@ -90,7 +92,10 @@ class UserDao:
             'role': role
         }
 
-        results = self.__db.session.execute(text(sql), params)
-        self.__db.session.commit()
+        try:
+            results = self.__db.session.execute(text(sql), params)
+            self.__db.session.commit()
+        except IntegrityError:
+            raise ValueError({'username': 'taken', 'password': None})
 
         return results.fetchone()
