@@ -1,10 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>Etusivu</h2>
+<h2>Etusivu</h2> 
 
 
-Olet kirjautunut sisään nimellä <b>{{ session.username }}</b>. <a href="/logout">Kirjaudu ulos</a>
+{% if role > 0 %}
+<a href='/ingredients'>Raaka-aineet</a>
+{% endif %}
 
+<br>
+
+{% if role == 2 %}
+<a>Admin shit</a>
+{% endif %}
 
 {% endblock %}

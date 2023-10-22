@@ -24,3 +24,8 @@ td, th {
     background-color: tomato;
     font-size: larger;
 }
+
+.logout {
+    font-size: large;
+    padding-left: 350px;
+}

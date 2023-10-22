@@ -4,15 +4,13 @@ from services.user_service import UserService
 from http import HTTPMethod, HTTPStatus
 from secrets import token_hex
 
-
-
 def make_main_router(service: UserService) -> Blueprint:
     router = Blueprint("main_router", __name__)
 
     @router.route('/', methods=[HTTPMethod.GET])
     def home():
         if 'username' in session:
-            return render_template('index.html')
+            return render_template('index.html', role=session['role'])
         else:
             return redirect('/login')
 
@@ -35,9 +33,13 @@ def make_main_router(service: UserService) -> Blueprint:
     
     @router.route('/logout', methods=[HTTPMethod.GET])
     def logout():
-        del session['user_id']
+        if 'username' not in session:
+            flash('Et ole kirjautunut sisään', 'error')
+            return redirect('/login')
+        
+        del session['id']
         del session['username']
-        del session['user_role']
+        del session['role']
         del session['csrf_token']
         
         flash('Olet kirjautunut ulos', 'notification')

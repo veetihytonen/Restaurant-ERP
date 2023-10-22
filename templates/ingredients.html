@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Raaka-aineet</h2> 
+
+<div>
+    <h3>Luo uusi raaka-aine:</h3>
+    <form action='/ingredients' method='post'>
+        <label>
+            Nimi:
+            <input type='text' name='name'>
+        </label>
+        <br>
+        <label>
+            Säilytyskategoria:
+            <select name='category'>
+                <option value='Kuiva'> Kuiva
+                <option value='Kylmä'> Kylmä
+            </select>
+        </label>
+        <br>
+        <input type="submit" value='Luo raaka-aine'>
+        <input type="hidden" name="csrf_token" value="{{ session['csrf_token'] }}">
+    </form>
+</div>
+
+<br>
+
+<table>
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Nimi
+        </th>
+        <th>
+            Kategoria
+        </th>
+    </tr>
+    {% for ingredient in ingredients %}
+    <tr>
+        <td>{{ ingredient.id }}</td>
+        <td>{{ ingredient.name }}</td>
+        <td>{{ ingredient.storage_category }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<a href='/'>Etusivu</a>
+
+{% endblock %}

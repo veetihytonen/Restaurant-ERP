@@ -2,7 +2,13 @@
 <link rel="stylesheet" href="/static/main.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ravintola-ERP</title>
-<h1>Ravintola-ERP</h1>
+
+<h1>
+    Ravintola-ERP
+    {% if 'username' in session %}
+    <a class='logout' href='/logout'> Kirjaudu ulos </a> 
+    {% endif %}
+</h1>
 
 <hr>
 

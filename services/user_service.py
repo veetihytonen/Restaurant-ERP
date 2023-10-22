@@ -12,9 +12,9 @@ class UserService:
         if not user:
             return False
         
-        session['user_id'] = user['id']
+        session['id'] = user['id']
         session['username'] = user['username']
-        session['user_role'] = user['role']
+        session['role'] = user['role']
         session['csrf_token'] = token_hex(16)
 
         return True

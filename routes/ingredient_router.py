@@ -1,28 +1,43 @@
-from flask import request
+from flask import request, session, render_template, redirect, flash, Response
 from flask.blueprints import Blueprint
 from services.ingredient_service import IngredientService
 from http import HTTPMethod, HTTPStatus
+from utils import check_csrf, check_auth
 
 def make_ingredient_router(service: IngredientService) -> Blueprint:
-    router = Blueprint('ingredients_router', __name__)
+    router = Blueprint('ingredient_router', __name__)
 
     @router.route('/', methods=[HTTPMethod.GET])
-    def get_ingredients() -> tuple[dict, HTTPStatus]:
-        result = service.get_all()
-        
-        return result, HTTPStatus.OK
+    def get_ingredients():
+        auth = check_auth(access_level=1)
+        if not auth[0]:
+            return auth[1]
+
+        ingredients = service.get_all()
+
+        return render_template('ingredients.html', ingredients=(ingredients))
 
     @router.route('/', methods=[HTTPMethod.POST])
-    def create_ingredient() -> tuple[dict[int, str, str], HTTPStatus]:
-        data = request.get_json()
-        name, category = data['name'], data['storage_category']
+    def create_ingredient():
+        auth = check_auth(access_level=1)
+        if not auth[0]:
+            return auth[1]
 
-        result = service.create(name=name, category=category)
+        check_csrf()
 
-        return result, HTTPStatus.CREATED
+        name, category = request.form['name'], request.form['category']
         
+        try:
+            result = service.create(name=name, category=category)
+        except ValueError as ve:
+            flash(ve.args[0], 'error')
+            return redirect('/ingredients')
+
+        flash(f'Luotiin raaka-aine "{name}"', 'notification')
+        return redirect('/ingredients')
+
     @router.route('/<ingredient_id>', methods=[HTTPMethod.GET])
-    def get_ingredient_by_id(ingredient_id: int) -> tuple[dict[int, str, str], HTTPStatus]:
+    def get_ingredient_by_id(ingredient_id: int):
         result = service.get_by_id(ingredient_id)
 
         return result, HTTPStatus.OK

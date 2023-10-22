@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 from config import DATABASE_URI
+from werkzeug.security import generate_password_hash
 
 engine = create_engine(DATABASE_URI)
 
@@ -18,7 +19,7 @@ def init_db() -> None:
         conn.execute(queries)
         conn.commit()
 
-        ingredients = [('lettuce', 'cold'), ('tomato_diced', 'cold'), ('tortilla', 'dry')]
+        ingredients = [('lettuce', 'kylmä'), ('tomato_diced', 'kylmä'), ('tortilla', 'kuiva')]
 
         ingr_sql = text('INSERT INTO ingredients (name, storage_category) VALUES (:name, :strg_ctgr)')
 
@@ -28,3 +29,4 @@ def init_db() -> None:
             conn.execute(ingr_sql, {'name':name, 'strg_ctgr':strg_ctgr})
         conn.commit()
 
+        
