@@ -96,6 +96,6 @@ class UserDao:
             results = self.__db.session.execute(text(sql), params)
             self.__db.session.commit()
         except IntegrityError:
-            raise ValueError({'username': 'taken', 'password': None})
+            raise ValueError('Käyttäjä on jo olemassa')
 
         return results.fetchone()

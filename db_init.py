@@ -27,3 +27,4 @@ def init_db() -> None:
             strg_ctgr = ingr[1]
             conn.execute(ingr_sql, {'name':name, 'strg_ctgr':strg_ctgr})
         conn.commit()
+

@@ -2,7 +2,9 @@ from flask import request, session, render_template, redirect, flash
 from flask.blueprints import Blueprint
 from services.user_service import UserService
 from http import HTTPMethod, HTTPStatus
-from utils import check_csrf
+from secrets import token_hex
+
+
 
 def make_main_router(service: UserService) -> Blueprint:
     router = Blueprint("main_router", __name__)
@@ -26,7 +28,7 @@ def make_main_router(service: UserService) -> Blueprint:
         user = service.login(username, password)
 
         if not user:
-            flash('Väärä tunnus tai salasana')
+            flash('Väärä tunnus tai salasana', 'error')
             return redirect('/login')        
         
         return redirect("/")
@@ -37,7 +39,8 @@ def make_main_router(service: UserService) -> Blueprint:
         del session['username']
         del session['user_role']
         del session['csrf_token']
-
+        
+        flash('Olet kirjautunut ulos', 'notification')
         return redirect('/login')
     
     @router.route('/register', methods=[HTTPMethod.GET])
@@ -51,11 +54,11 @@ def make_main_router(service: UserService) -> Blueprint:
         
         try:
             user = service.register(username=username, password1=passw1, password2=passw2, role=role)
-        except ValueError as ve:
-            flash(ve.args[0])
+        except ValueError as error:
+            flash(error.args[0], 'error')
             return redirect('/register')
         
-        flash('Käyttäjän luominen onnistui')
+        flash('Käyttäjän luominen onnistui', 'notification')
         return redirect('/login')
 
     return router

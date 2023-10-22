@@ -15,11 +15,12 @@ td, th {
     border-width: 1px;
 }
 
-.flashes {
-    background-color: crimson;
+.notification {
+    background-color: palegreen;
     font-size: larger;
 }
 
-ul.flashes {
-    list-style: none;
+.error {
+    background-color: tomato;
+    font-size: larger;
 }
