@@ -49,4 +49,3 @@ class IngredientDao:
             raise ValueError('Raaka-aine on jo olemassa')
 
         return result.fetchone()
-    

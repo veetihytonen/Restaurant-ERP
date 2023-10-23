@@ -7,7 +7,7 @@
     <a href='/' class='homelink'>Etusivu</a>
 </h2> 
 
-<h3>Toimittajan nimi: {{ replenishment['vendor_name'] }}</h3>
+<h3>Toimittajan nimi: {{ replenishment[0].vendor_name }}</h3>
 
 <table>
     <tr>
@@ -35,7 +35,5 @@
         {% endfor %}
     {% endif %}
 </table>
-
-
 
 {% endblock %}

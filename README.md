@@ -26,6 +26,18 @@ There are three user roles in the application with increasing levels of access (
 * Managers can see basic analytics from the reporting tool, such as current top selling prodcut
 * Admins are able to create, update and remove users
 
+### Current state of the app
+The app is in a quite unfinished state, but fullfills enough functionality to be rated
+
+Current features of the app are:
+
+* Can create a user. Currently no difference between manager and admin
+* Can log in and log out
+* Managers can view ingredients create new ones
+* Users can mark warehouse replenishments
+* Managers can view warehouse replenishments
+* Managers can view stock levels
+
 ### Installation and setup
 1. Clone the git repository
 ``` 
@@ -42,7 +54,7 @@ source venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
-4. Create .env file and add these rows:
+4. Create .env file and add these rows
 ```
 DATABASE_URI=<database-local-address>
 SECRET_KEY=<your-secret-key>

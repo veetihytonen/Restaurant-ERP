@@ -25,4 +25,3 @@ class IngredientService:
         id, name, strg_ctgr = self.__dao.create_ingredient(name=name, storage_category=category)
 
         return {'id':id, 'name':name, 'storage_category':strg_ctgr}
-        

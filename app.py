@@ -12,14 +12,10 @@ from services.stock_service import StockService
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
 
-from init_db import init_db
-
 from routes.main_router import make_main_router
 from routes.ingredient_router import make_ingredient_router
 from routes.stock_router import make_stock_router
 from routes.warehouse_router import make_warehouse_router
-
-init_db()
 
 from db import db
 

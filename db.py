@@ -4,3 +4,4 @@ from config import DATABASE_URI
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 db = SQLAlchemy(app)
+
