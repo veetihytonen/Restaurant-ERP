@@ -48,7 +48,7 @@ DATABASE_URI=<database-local-address>
 SECRET_KEY=<your-secret-key>
 ```
 5. Start your local postgres database
-6. Initialise database by running init script:
+6. Initialise database by running init script
 ```
 python3 init_db.py
 ```

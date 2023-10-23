@@ -1,8 +1,8 @@
 from flask import request, session, render_template, redirect, flash, Response
 from flask.blueprints import Blueprint
 from services.ingredient_service import IngredientService
-from http import HTTPMethod, HTTPStatus
 from utils import check_csrf, check_auth
+from http import HTTPMethod
 
 def make_ingredient_router(service: IngredientService) -> Blueprint:
     router = Blueprint('ingredient_router', __name__)
@@ -35,11 +35,5 @@ def make_ingredient_router(service: IngredientService) -> Blueprint:
 
         flash(f'Luotiin raaka-aine "{name}"', 'notification')
         return redirect('/ingredients')
-
-    @router.route('/<ingredient_id>', methods=[HTTPMethod.GET])
-    def get_ingredient_by_id(ingredient_id: int):
-        result = service.get_by_id(ingredient_id)
-
-        return result, HTTPStatus.OK
-
+    
     return router

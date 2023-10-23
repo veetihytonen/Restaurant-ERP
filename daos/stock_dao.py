@@ -7,10 +7,15 @@ class StockDao:
 
     def get_all_stock_levels(self):
         sql = """
-        SELECT ingredient_id, SUM (amount)
-        FROM ingredient_stock_updates
-        GROUP BY ingredient_id
-        ORDER BY ingredient_id ASC
+        SELECT ingredients.id, ingredients.name, SUM (ingredient_stock_updates.amount)
+        FROM 
+            ingredients
+        INNER JOIN 
+            ingredient_stock_updates
+        ON 
+            ingredients.id = ingredient_stock_updates.ingredient_id
+        GROUP BY ingredients.id
+        ORDER BY ingredients.id ASC
         """
 
         results = self.__db.session.execute(text(sql))

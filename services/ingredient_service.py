@@ -6,7 +6,7 @@ class IngredientService:
 
     def get_all(self):
         results = self.__dao.get_all_ingredients()
-        formatted = [{'id':id, 'name':name, 'storage_category':strg_ctgr} for id, name, strg_ctgr in results]
+        formatted = [{"id":id, "name": name, "storage_category": strg_ctgr} for id, name, strg_ctgr in results]
 
         return formatted
     

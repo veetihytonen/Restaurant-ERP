@@ -17,6 +17,7 @@ from init_db import init_db
 from routes.main_router import make_main_router
 from routes.ingredient_router import make_ingredient_router
 from routes.stock_router import make_stock_router
+from routes.warehouse_router import make_warehouse_router
 
 init_db()
 
@@ -37,5 +38,7 @@ app.register_blueprint(ingredient_router, url_prefix='/ingredients')
 stock_dao = StockDao(db_connection=db)
 stock_service = StockService(dao=stock_dao)
 stock_router = make_stock_router(service=stock_service)
+warehouse_router = make_warehouse_router(stock_service=stock_service, ingredient_service=ingrendient_service)
 
 app.register_blueprint(stock_router, url_prefix='/stock')
+app.register_blueprint(warehouse_router, url_prefix='/replenishments')

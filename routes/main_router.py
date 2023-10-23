@@ -1,8 +1,7 @@
 from flask import request, session, render_template, redirect, flash
 from flask.blueprints import Blueprint
 from services.user_service import UserService
-from http import HTTPMethod, HTTPStatus
-from secrets import token_hex
+from http import HTTPMethod
 
 def make_main_router(service: UserService) -> Blueprint:
     router = Blueprint("main_router", __name__)

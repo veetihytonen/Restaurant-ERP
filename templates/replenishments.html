@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>
+    Raaka-ainetoimitukset
+    <a href='/' class='homelink'>Etusivu</a>
+</h2> 
+
+<br>
+
+<style>
+    .add-row-button {
+        margin: 10px auto;
+    }
+</style>
+
+<div id='data' ingredients="{{ingredients}}"></div>
+
+<script>
+    let ingredients = document.getElementById('data').getAttribute('ingredients')
+    ingredients = ingredients.replace(/'/g, '"')
+    ingredients = JSON.parse(ingredients)
+
+    function addRow() {
+        const tableBody = document.getElementById('dynamic-rows');
+        const newRow = document.createElement('tr');
+        const selectElement = document.createElement('select')
+        
+        let options = ''
+
+        for (const ingr of ingredients) {
+            const option = document.createElement('option')
+            options += `<option value="${ingr.id}">${ingr.name}</option>`;
+        };
+        
+        newRow.innerHTML = `
+            <td>
+                <select name='ingredient[]'>
+                    ${options}
+                <select />
+            </td>
+            <td>
+                <input type="text" name='amount[]'>
+            </td>
+            <td>
+                <input type="text" name='price[]'>
+            </td>
+        `;
+        tableBody.appendChild(newRow);
+    }
+</script>
+
+<div>
+    <h3>Kirjaa toimitus:</h3>
+    <form action='/replenishments' method='post'>
+        <label>
+            Toimittajan nimi:
+            <input type='text' name='vendor'>
+        </label>
+        <table>
+            <thead>
+                <tr>
+                    <th>Raaka-aine</th>
+                    <th>Määrä (kg)</th>
+                    <th>Hinta per yksikkö</th>
+                </tr>
+            </thead>
+            <tbody id="dynamic-rows">
+                <tr>
+                    <td>
+                        <select name='ingredient[]'>
+                            {% if ingredients %}
+                            {% for ingredient in ingredients %}
+                                <option value="{{ingredient['id']}}"> {{ ingredient.name }}
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type='text' name='amount[]'>
+                    </td>
+                    <td>
+                        <input type='text' name='price[]'>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" class="add-row-button" onclick="addRow()">Lisää rivi</button>
+        <br>
+        <input type="submit" value='Kirjaa toimitus'>
+        <input type="hidden" name="csrf_token" value="{{ session['csrf_token'] }}">
+    </form>
+</div>
+
+
+<br>
+
+<h3>Toimitukset</h3>
+
+<table>
+    <tr>
+        <th>
+            Toimituksen ID
+        </th>
+        <th>
+            Toimittajan nimi
+        </th>
+    </tr>
+    {% if replenishments %}
+        {% for replenishment in replenishments %}
+        <tr>
+            <td>{{ replenishment.id }}</td>
+            <td>{{ replenishment.vendor_name }}</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+
+{% endblock %}

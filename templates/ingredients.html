@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>Raaka-aineet</h2> 
+<h2>
+    Raaka-aineet
+    <a href='/' class='homelink'>Etusivu</a>
+</h2> 
 
 <div>
     <h3>Luo uusi raaka-aine:</h3>
@@ -38,6 +41,7 @@
             Kategoria
         </th>
     </tr>
+    {% if ingredients %}
     {% for ingredient in ingredients %}
     <tr>
         <td>{{ ingredient.id }}</td>
@@ -45,10 +49,7 @@
         <td>{{ ingredient.storage_category }}</td>
     </tr>
     {% endfor %}
+    {% endif %}
 </table>
-
-
-
-<a href='/'>Etusivu</a>
 
 {% endblock %}

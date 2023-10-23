@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>
+    Varasto
+    <a href='/' class='homelink'>Etusivu</a>
+</h2> 
+
+<br>
+
+<table>
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Nimi
+        </th>
+        <th>
+            Määrä
+        </th>
+    </tr>
+    {% if stock_levels %}
+        {% for level in stock_levels %}
+        <tr>
+            <td>{{ ingredient.id }}</td>
+            <td>{{ ingredient.name }}</td>
+            <td>{{ ingredient.amount }}</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+
+{% endblock %}

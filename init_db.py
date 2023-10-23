@@ -19,7 +19,7 @@ def init_db() -> None:
         conn.execute(queries)
         conn.commit()
 
-        ingredients = [('lettuce', 'kylmä'), ('tomato_diced', 'kylmä'), ('tortilla', 'kuiva')]
+        ingredients = [('lettuce', 'Kylmä'), ('tomato_diced', 'Kylmä'), ('tortilla', 'Kuiva')]
 
         ingr_sql = text('INSERT INTO ingredients (name, storage_category) VALUES (:name, :strg_ctgr)')
 
@@ -29,4 +29,9 @@ def init_db() -> None:
             conn.execute(ingr_sql, {'name':name, 'strg_ctgr':strg_ctgr})
         conn.commit()
 
-        
+        admin_hash = generate_password_hash('salis')
+
+        admin_sql = ("INSERT INTO users (username, password, role) VALUES ('hyde', :password, 2)")
+
+        conn.execute(text(admin_sql), {'password': admin_hash})
+        conn.commit()
