@@ -62,7 +62,7 @@
                 <tr>
                     <th>Raaka-aine</th>
                     <th>Määrä (kg)</th>
-                    <th>Hinta per yksikkö</th>
+                    <th>Hinta per yksikkö (€)</th>
                 </tr>
             </thead>
             <tbody id="dynamic-rows">
@@ -111,6 +111,9 @@
         <tr>
             <td>{{ replenishment.id }}</td>
             <td>{{ replenishment.vendor_name }}</td>
+            <td>
+                <a href='/replenishments/{{ replenishment.id }}'>Toimitukseen</a>
+            </td>
         </tr>
         {% endfor %}
     {% endif %}

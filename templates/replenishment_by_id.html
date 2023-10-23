@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>
+    Toimitus {{ replenishment_id }}
+    <a href='/replenishments' class='homelink'>Toimituksiin</a>
+    <a href='/' class='homelink'>Etusivu</a>
+</h2> 
+
+<h3>Toimittajan nimi: {{ replenishment['vendor_name'] }}</h3>
+
+<table>
+    <tr>
+        <th>
+            Raaka-aine-ID
+        </th>
+        <th>
+            Raaka-aineen nimi
+        </th>
+        <th>
+            Määrä (kg)
+        </th>
+        <th>
+            Hinta per ykikkö (€)
+        </th>
+    </tr>
+    {% if replenishment %}
+        {% for line in replenishment %}
+        <tr>
+            <td>{{ line.ingredient_id }}</td>
+            <td>{{ line.ingredient_name }}</td>
+            <td>{{ line.amount }}</td>
+            <td>{{ line.price_per_unit }}</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+
+
+
+{% endblock %}

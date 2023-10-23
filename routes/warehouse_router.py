@@ -21,6 +21,11 @@ def make_warehouse_router(stock_service: StockService, ingredient_service: Ingre
     
     @router.route('/', methods=[HTTPMethod.POST])
     def create_warehouse_replenishment() :
+        auth = check_auth(access_level=0)
+        if not auth[0]:
+            return auth[1]
+        check_csrf()
+
         vendor = request.form['vendor']
         ingr_ids = request.form.getlist('ingredient[]')
         ingr_amounts = request.form.getlist('amount[]')
@@ -34,7 +39,17 @@ def make_warehouse_router(stock_service: StockService, ingredient_service: Ingre
         
         stock_service.create_warehouse_replenishment(vendor_name=vendor, replenishments=replenishments)
 
-        flash('Timitus kirjattiin')
+        flash('Toimitus kirjattiin', 'notification')
         return redirect('/replenishments')
+
+    @router.route('/<wh_replenishment_id>', methods=[HTTPMethod.GET])
+    def get_replenishment_by_id(wh_replenishment_id: int):
+        auth = check_auth(access_level=0)
+        if not auth[0]:
+            return auth[1]
+        
+        replenishment = stock_service.get_ingredient_replenishments_by_wh_replenishment_id(wh_replenishment_id)
+        
+        return render_template('replenishment_by_id.html', replenishment_id=wh_replenishment_id, replenishment=replenishment)
 
     return router

@@ -20,18 +20,9 @@ def make_stock_router(service: StockService):
     @router.route('/<ingredient_id>', methods=[HTTPMethod.GET])
     def get_stock_level_by_id(ingredient_id: int):
         results = service.get_stock_level_by_id(ingredient_id)
-            
-    
+
     @router.route('/ingredient-replenishments', methods=[HTTPMethod.GET])
     def get_ingredient_replenishments():
         results = service.get_ingredient_replenishments()
-    
-    @router.route('/ingredient-replenishments/<replenishment_id>', methods=[HTTPMethod.GET])
-    def get_ingredient_replenishment_by_id(replenishment_id: int):
-        result = service.get_ingredient_replenishment_by_id(replenishment_id)
-    
-    @router.route('/ingredient-replenishments/replenishment/<wh_replenishment_id>', methods=[HTTPMethod.GET])
-    def get_ingredient_replenishments_by_wh_replenishment_id(wh_replenishment_id: int):
-        results = service.get_ingredient_replenishments_by_wh_replenishment_id(wh_replenishment_id)
 
     return router

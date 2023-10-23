@@ -48,18 +48,22 @@ class StockService:
     def get_ingredient_replenishments_by_wh_replenishment_id(self, wh_replenishment_id):
         results = self.__dao.get_ingredient_replenishments_by_wh_replenishment_id(wh_replenishment_id)
         
-        for_json = [
+        formatted = [
             {
             'id': id, 
+            'vendor_name': vendor_name,
+            'ingredient_name': ingredient_name,
             'replenishment_id': replenishment_id, 
             'ingredient_id': ingredient_id, 
             'amount': amount, 
-            'price_per_untit': price_per_unit
+            'price_per_unit': price_per_unit
             }
-        for id, replenishment_id, ingredient_id, amount, price_per_unit in results
+        for id, vendor_name, ingredient_name, replenishment_id, ingredient_id, amount, price_per_unit in results
         ]
 
-        return for_json
+        print(formatted)
+
+        return formatted
 
     def get_all_stock_levels(self):
         results = self.__dao.get_all_stock_levels()

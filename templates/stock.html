@@ -23,9 +23,9 @@
     {% if stock_levels %}
         {% for level in stock_levels %}
         <tr>
-            <td>{{ ingredient.id }}</td>
-            <td>{{ ingredient.name }}</td>
-            <td>{{ ingredient.amount }}</td>
+            <td>{{ level.id }}</td>
+            <td>{{ level.name }}</td>
+            <td>{{ level.amount }}</td>
         </tr>
         {% endfor %}
     {% endif %}
